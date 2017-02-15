@@ -18,6 +18,7 @@ try {
   // debug(e)
 }
 
+console.log(`./${overridesFilename}`)
 // Overrides file exists, so we can attempt to require it.
 // We intentionally don't wrap this in a try/catch as we want
 // the Node process to exit if an error occurs.

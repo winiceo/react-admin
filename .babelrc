@@ -11,7 +11,7 @@
         "transform-decorators-legacy",
         "add-module-exports", ["import", {
           "libraryName": "antd",
-          "style": true,
+          "style": true
         }]
       ]
     },
@@ -27,7 +27,7 @@
         "add-module-exports",
         "istanbul", ["import", {
           "libraryName": "antd",
-          "style": true,
+          "style": true
         }]
       ]
     },
@@ -42,7 +42,7 @@
         "transform-decorators-legacy",
         "add-module-exports", ["import", {
           "libraryName": "antd",
-          "style": true,
+          "style": true
         }]
       ]
     }

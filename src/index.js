@@ -1,27 +1,42 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
-import store from 'store'
-import { Provider } from 'react-redux'
-// import App from './app'
-import 'styles/index.less'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-const mountNode = document.getElementById('app')
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-default/index.css';
 
-const render = () => {
-  const App = require('app')
-  ReactDOM.render(
-    <AppContainer>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </AppContainer>,
-    mountNode
-  )
-}
+import Breadcrumb from './components/breadcrumb';
 
-if (module.hot) {
-  module.hot.accept('app', render)
-}
+// start mock
+import Mock from './mock';
+Mock.bootstrap();
 
-render()
+import App from './app.vue';
+import routes from './routes';
+import './style.scss';
+
+Vue.use(VueRouter);
+Vue.use(ElementUI);
+
+// register dashboard components
+Vue.component('db-breadcrumb', Breadcrumb);
+
+export const router = new VueRouter({
+  routes,
+  mode: 'hash',
+  linkActiveClass: 'active'
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    let user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      next({path: '/login', query: {redirect: to.fullPath}});
+    }
+  }
+  next();
+});
+
+new Vue({
+  render: h => h(App),
+  router
+}).$mount('#app');
